@@ -1,0 +1,21 @@
+K 26
+svn:wc:ra_dav:activity-url
+V 28
+/subversion/public/!svn/act/
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/subversion/public/!svn/ver/7/projeto1/almprojecttrunk
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/subversion/public/!svn/ver/7/projeto1/almprojecttrunk/README.md
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/subversion/public/!svn/ver/7/projeto1/almprojecttrunk/pom.xml
+END
