@@ -68,7 +68,6 @@ public class MemberRegistrationTest {
     
     @Test
     public void test(){
-        
         List<Member> memberList = memberRepository.findAllOrderedByName();
         System.out.println(memberList);
         
