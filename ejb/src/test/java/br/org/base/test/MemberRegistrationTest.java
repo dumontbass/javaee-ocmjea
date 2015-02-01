@@ -16,17 +16,12 @@
  */
 package br.org.base.test;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.util.logging.Logger;
-
-import javax.inject.Inject;
-
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import br.org.base.data.MemberRepository;
 import br.org.base.model.Member;
 import br.org.base.service.MemberRegistration;
 import br.org.base.util.Resources;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -34,12 +29,18 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
+import java.util.List;
+import java.util.logging.Logger;
+
+import static org.junit.Assert.assertNotNull;
+
 @RunWith(Arquillian.class)
 public class MemberRegistrationTest {
     @Deployment
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClasses(Member.class, MemberRegistration.class, Resources.class)
+                .addClasses(Member.class, MemberRegistration.class,MemberRepository.class, Resources.class)
                 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 // Deploy our test datasource
@@ -48,6 +49,8 @@ public class MemberRegistrationTest {
 
     @Inject
     MemberRegistration memberRegistration;
+    @Inject
+    MemberRepository memberRepository;
 
     @Inject
     Logger log;
@@ -61,6 +64,14 @@ public class MemberRegistrationTest {
         memberRegistration.register(newMember);
         assertNotNull(newMember.getId());
         log.info(newMember.getName() + " was persisted with id " + newMember.getId());
+    }
+    
+    @Test
+    public void test(){
+        
+        List<Member> memberList = memberRepository.findAllOrderedByName();
+        System.out.println(memberList);
+        
     }
 
 }
