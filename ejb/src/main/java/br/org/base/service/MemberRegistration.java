@@ -16,6 +16,7 @@
  */
 package br.org.base.service;
 
+import br.org.base.interceptor.Audit;
 import br.org.base.model.Member;
 
 import javax.ejb.Stateless;
@@ -37,6 +38,7 @@ public class MemberRegistration {
     @Inject
     private Event<Member> memberEventSrc;
 
+    @Audit
     public void register(Member member) throws Exception {
         log.info("Registering " + member.getName());
         em.persist(member);
