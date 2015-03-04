@@ -48,7 +48,7 @@ public class MemberController {
         return newMember;
     }
 
-    public void register() throws Exception {
+    public String register() {
         try {
             memberRegistration.register(newMember);
             facesContext.addMessage(null,
@@ -59,6 +59,8 @@ public class MemberController {
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
             facesContext.addMessage(null, m);
         }
+        
+        return null;
     }
 
     @PostConstruct
