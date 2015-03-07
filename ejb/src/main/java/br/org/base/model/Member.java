@@ -60,6 +60,17 @@ public class Member implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+
+    @Override
+    public String toString() {
+        return "Member{" +
+
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }
