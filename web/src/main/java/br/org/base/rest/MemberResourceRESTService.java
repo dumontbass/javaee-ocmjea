@@ -40,6 +40,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.org.base.data.Crud;
 import br.org.base.data.MemberRepository;
 import br.org.base.model.Member;
 import br.org.base.service.MemberRegistration;
@@ -63,6 +64,9 @@ public class MemberResourceRESTService {
 
     @Inject
     MemberRegistration registration;
+    
+    @Inject
+    Crud crud;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,7 +78,7 @@ public class MemberResourceRESTService {
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
     public Member lookupMemberById(@PathParam("id") long id) {
-        Member member = repository.findById(id);
+        Member member = (Member) repository.findById(id);
         if (member == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

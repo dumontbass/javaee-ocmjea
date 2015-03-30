@@ -16,10 +16,16 @@
  */
 package br.org.base.test;
 
+import br.org.base.data.Crud;
 import br.org.base.data.MemberRepository;
+import br.org.base.model.Invoice;
 import br.org.base.model.Member;
+import br.org.base.model.Periodicity;
+import br.org.base.model.Venda;
 import br.org.base.service.MemberRegistration;
+import br.org.base.service.VendaService;
 import br.org.base.util.Resources;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -30,9 +36,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+
 import java.util.List;
 import java.util.logging.Logger;
 
+import junit.framework.Assert;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
@@ -40,7 +48,20 @@ public class MemberRegistrationTest {
     @Deployment
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClasses(Member.class, MemberRegistration.class,MemberRepository.class, Resources.class)
+                .addClasses(
+                		Member.class, 
+                		Invoice.class,
+                		Periodicity.class,
+                		Crud.class, 
+                		Venda.class,
+                		MemberRegistration.class,
+                		MemberRepository.class, 
+                		VendaService.class,
+                		Resources.class 
+                		
+                		
+                		
+                		)
                 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 // Deploy our test datasource
@@ -51,6 +72,8 @@ public class MemberRegistrationTest {
     MemberRegistration memberRegistration;
     @Inject
     MemberRepository memberRepository;
+    @Inject
+    VendaService venda;
 
     @Inject
     Logger log;
@@ -64,6 +87,21 @@ public class MemberRegistrationTest {
         memberRegistration.register(newMember);
         assertNotNull(newMember.getId());
         log.info(newMember.getName() + " was persisted with id " + newMember.getId());
+        
+    }
+    
+    @Test
+    public void testSqlMapping() {
+    	Venda v = new Venda();
+    	//v.setId(1L);
+    	v.setNome("asdasda");
+    	v.setPessoa("pessoa");
+ 
+    	v.setValor(3.5f);
+    	venda.insere(v);
+    	
+        List<Venda> lst = venda.list();
+        Assert.assertFalse(lst.size() == 0);
         
     }
     

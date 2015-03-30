@@ -16,25 +16,24 @@
  */
 package br.org.base.model;
 
-import java.io.Serializable;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @XmlRootElement
+@NamedQueries({
+	@NamedQuery(name = "Member.find", query = "select m.name, m.email, m.phoneNumber from Member m where m.id is null or m.id = :id"),
+	@NamedQuery(name = "Member.findAll", query = "select m from Member m ")
+})
 @Table(name = "Registrant", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Member implements Serializable {
     /** Default value included to remove warning. Remove or modify at will. **/
@@ -59,7 +58,9 @@ public class Member implements Serializable {
     @Digits(fraction = 0, integer = 12)
     @Column(name = "phone_number")
     private String phoneNumber;
-
+    
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    private List<Invoice> invoices;
 
     @Override
     public String toString() {
@@ -102,4 +103,14 @@ public class Member implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+	public List<Invoice> getInvoices() {
+		return invoices;
+	}
+
+	public void setInvoices(List<Invoice> invoices) {
+		this.invoices = invoices;
+	}
+    
+    
 }

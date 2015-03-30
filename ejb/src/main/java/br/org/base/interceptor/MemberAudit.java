@@ -1,10 +1,13 @@
 package br.org.base.interceptor;
 
+import br.org.base.data.Crud;
 import br.org.base.model.Member;
 
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -12,6 +15,10 @@ import java.util.Iterator;
 @Interceptor
 @Audit
 public class MemberAudit {
+	
+	//@Inject
+	//private Crud<Member> crud;
+	
     @AroundInvoke
     public Object intercept(InvocationContext context) throws Exception {
 

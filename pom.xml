@@ -60,8 +60,8 @@
         <version.war.plugin>2.1.1</version.war.plugin>
 
         <!-- maven-compiler-plugin -->
-        <maven.compiler.target>1.6</maven.compiler.target>
-        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
     </properties>
 
     <dependencyManagement>
@@ -113,7 +113,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
+   <!--  <distributionManagement>
 	<repository>
 		<id>Releases</id>
 		<url>http://localhost:8888/nexus/content/repositories/releases/</url>
@@ -122,7 +122,7 @@
 		<id>Snapshots</id>
 		<url>http://localhost:8888/nexus/content/repositories/snapshots/</url>
 	</snapshotRepository>
-    </distributionManagement>
+    </distributionManagement> -->
 
 
     <build>
@@ -135,11 +135,7 @@
                 <plugin>
                     <groupId>org.jboss.as.plugins</groupId>
                     <artifactId>jboss-as-maven-plugin</artifactId>
-                    <version>${version.jboss.maven.plugin}</version>
-                    <inherited>true</inherited>
-                    <configuration>
-                        <skip>true</skip>
-                    </configuration>
+                    <version>7.6.Final</version>
                 </plugin>
             </plugins>
         </pluginManagement>

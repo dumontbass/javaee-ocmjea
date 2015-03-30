@@ -14,35 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.org.base.util;
+package br.org.base.data;
 
-import java.util.logging.Logger;
-
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-/**
- * This class uses CDI to alias Java EE resources, such as the persistence context, to CDI beans
- * 
- * <p>
- * Example injection on a managed bean field:
- * </p>
- * 
- * <pre>
- * &#064;Inject
- * private EntityManager em;
- * </pre>
- */
-public class Resources {
-    // use @SuppressWarnings to tell IDE to ignore warnings about field not being referenced directly
-    @Produces
-    @PersistenceContext
+import java.util.List;
+
+import br.org.base.model.Member;
+import br.org.base.model.Venda;
+
+@ApplicationScoped
+public class VendaRepository {
+
+    @Inject
     private EntityManager em;
 
-    @Produces
-    public Logger produceLog(InjectionPoint injectionPoint) {
-        return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
+    public List<Venda> find() {
+        Query query  = em.createNamedQuery("GetVenda");
+    	return query.getResultList();
     }
+
+
 }

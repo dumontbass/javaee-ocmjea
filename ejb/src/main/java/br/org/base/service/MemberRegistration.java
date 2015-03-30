@@ -16,17 +16,15 @@
  */
 package br.org.base.service;
 
-import br.org.base.interceptor.Audit;
-import br.org.base.model.Member;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 
-import java.util.logging.Logger;
+import br.org.base.data.Crud;
+import br.org.base.interceptor.Audit;
+import br.org.base.model.Member;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
 @Stateless
@@ -34,17 +32,21 @@ public class MemberRegistration {
 
     @Inject
     private Logger log;
-
-    @PersistenceContext
-    private EntityManager em;
-
+    
+    @Inject
+    private Crud<Member> crud;
+    
     @Inject
     private Event<Member> memberEventSrc;
 
     @Audit
     public void register(Member member) throws Exception {
-        log.info("Registering " + member.getName());
-        em.persist(member);
+        //log.info("Registering " + member.getName());
+      
+        crud.persist(member);
+        
+        //crud.find(member.getId(), Member.class);
+        
         memberEventSrc.fire(member);
     }
 }

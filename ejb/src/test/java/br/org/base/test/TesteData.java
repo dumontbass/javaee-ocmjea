@@ -1,10 +1,9 @@
 package br.org.base.test;
 
-import static org.junit.Assert.*;
-
+import br.org.base.data.Data;
 import org.junit.Test;
 
-import br.org.base.data.Data;
+import static org.junit.Assert.assertTrue;
 
 public class TesteData {
 
@@ -12,6 +11,11 @@ public class TesteData {
 	public void test() {
 		Data data = new Data(01,10,2000);
 		assertTrue("bissexto errado", data.anoBissexto());
+	}
+	
+	@Test
+	public void insereEEditaPessoa(){
+
 	}
 
 }
