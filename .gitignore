@@ -80,6 +80,10 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+ear/target
+war/target
+ejb/target
+
 
 ### Java template
 *.class
